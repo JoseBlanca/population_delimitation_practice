@@ -69,14 +69,36 @@ def _(cat_dropdown, widget):
 
 
 @app.cell
+def _(mo, populations):
+    get_pop_tick, set_pop_tick = mo.state(0)
+
+    def _on_populations_change(*_args, **_kwargs):
+        # Bump the tick so dependent cells rerun
+        set_pop_tick(get_pop_tick() + 1)
+
+    # Best-effort unsubscribe to avoid duplicate subscriptions on reruns
+    try:
+        populations.unsubscribe(_on_populations_change)
+    except Exception:
+        pass
+
+    populations.subscribe(_on_populations_change)
+    return (get_pop_tick,)
+
+
+@app.cell
 def _(widget):
     widget
     return
 
 
 @app.cell
-def _(populations):
+def _(get_pop_tick, populations):
     from collections import Counter
+
+    # we need this cell to depend on the pop tick in order to rerun when populations is changed
+    _ = get_pop_tick()
+
     print(Counter(populations.values))
     return
 

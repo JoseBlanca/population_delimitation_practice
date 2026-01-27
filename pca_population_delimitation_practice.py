@@ -47,13 +47,31 @@ def _(numpy, pandas, passports, pca_res, scatter3d):
     xyz = pca_res.iloc[:, :3]
     data = pandas.merge(xyz, passports.loc[:, ('Taxon', 'Country')], left_index=True, right_index=True, how="left")
     taxa = scatter3d.Category(data.loc[:, 'Taxon'])
-    country = scatter3d.Category(data.loc[:, 'Country'])
-    populations = scatter3d.Category(pandas.Series(numpy.full((data.shape[0], ), 'unclass'), index=data.index))
+    countries = scatter3d.Category(data.loc[:, 'Country'])
+    populations = scatter3d.Category(pandas.Series(numpy.full((data.shape[0], ), 'unclass'), index=data.index, name='populations'))
     populations.set_label_list(['unclass', 'pop1', 'pop2', 'pop3', 'pop4', 'pop5'])
+    widget = scatter3d.Scatter3dWidget(data.iloc[:, :3].to_numpy(), category=taxa)
+    return countries, populations, taxa, widget
 
-    widget = scatter3d.Scatter3dWidget(data.iloc[:, :3].to_numpy(), category=populations)
+
+@app.cell
+def _(countries, mo, populations, taxa):
+    cat_dropdown = mo.ui.dropdown(options={'taxa': taxa, 'countries': countries, 'populations': populations}, value='taxa')
+    cat_dropdown
+    return (cat_dropdown,)
+
+
+@app.cell
+def _(cat_dropdown, widget):
+    print(cat_dropdown.value.name)
+    widget.category = cat_dropdown.value
+    return
+
+
+@app.cell
+def _(widget):
     widget
-    return (populations,)
+    return
 
 
 @app.cell

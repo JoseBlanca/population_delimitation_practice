@@ -1,0 +1,9 @@
+[project]
+name = "population-delimitation-practice"
+version = "0.1.0"
+description = "Population genetic practice: population delimitation"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "marimo>=0.19.6",
+]

@@ -12,12 +12,13 @@ def _():
     import pandas
     import numpy
     import scatter3d
+    import plotly.express as px
 
     PROJECT_DIR = Path(__file__).parent
     DATA_DIR = PROJECT_DIR / "data"
     PASSPORTS = DATA_DIR / 'tomato_passports.csv'
     PCA_RESULT = DATA_DIR / 'tomato_pca.csv'
-    return PASSPORTS, PCA_RESULT, mo, numpy, pandas, scatter3d
+    return PASSPORTS, PCA_RESULT, mo, numpy, pandas, px, scatter3d
 
 
 @app.cell
@@ -31,6 +32,7 @@ def _(mo):
 @app.cell
 def _(PASSPORTS, pandas):
     passports = pandas.read_csv(PASSPORTS, index_col='id')
+    passports["Country"] = passports["Country"].replace({"PER_N": "PER"})
     passports
     return (passports,)
 
@@ -50,7 +52,7 @@ def _(numpy, pandas, passports, pca_res, scatter3d):
     countries = scatter3d.Category(data.loc[:, 'Country'])
     populations = scatter3d.Category(pandas.Series(numpy.full((data.shape[0], ), 'unclass'), index=data.index, name='populations'))
     populations.set_label_list(['unclass', 'pop1', 'pop2', 'pop3', 'pop4', 'pop5'])
-    widget = scatter3d.Scatter3dWidget(data.iloc[:, :3].to_numpy(), category=taxa)
+    widget = scatter3d.Scatter3dWidget(data.iloc[:, :3].to_numpy(), category=taxa, point_ids=list(data.index))
     return countries, populations, taxa, widget
 
 
@@ -93,13 +95,58 @@ def _(widget):
 
 
 @app.cell
-def _(get_pop_tick, populations):
-    from collections import Counter
+def _(mo, populations):
+    pop_classes = set(populations.label_list)
+    pop_classes = sorted(pop_classes.difference(['unclass']))
+    pop_classes.insert(0, 'All')
+    pop_dropdown = mo.ui.dropdown(options=list(pop_classes), value='All')
+    pop_dropdown
+    return (pop_dropdown,)
 
+
+@app.cell
+def _(pandas, passports):
+    def count_countries_in_pop(populations, widget, pop):
+        classification = pandas.Series(populations.values.values, index=widget.point_ids, name='population')
+        class_country =pandas.merge(classification, passports.loc[:, 'Country'], left_index=True, right_index=True, how='left')
+        if pop == 'All':
+            pop_country_counts = class_country.loc[:, 'Country'].value_counts()
+            pop_country_counts = pandas.DataFrame({'Country':pop_country_counts.index, 'n': pop_country_counts})
+        else:
+            country_counts = (
+            class_country
+            .groupby(["population", "Country"])
+            .size()
+            .reset_index(name="n")
+        )
+            pop_country_counts = country_counts[country_counts['population']==pop].loc[:, ('Country', 'n')]
+        return pop_country_counts
+    return (count_countries_in_pop,)
+
+
+@app.cell
+def _(
+    count_countries_in_pop,
+    get_pop_tick,
+    pop_dropdown,
+    populations,
+    px,
+    widget,
+):
     # we need this cell to depend on the pop tick in order to rerun when populations is changed
     _ = get_pop_tick()
 
-    print(Counter(populations.values))
+    pop_country_counts = count_countries_in_pop(populations, widget, pop_dropdown.value)
+
+    fig = px.choropleth(
+        pop_country_counts,
+        locations="Country",
+        locationmode="ISO-3",
+        color="n",
+        color_continuous_scale="Viridis",
+        title="Number of individuals by country",
+    )
+    fig
     return
 
 

@@ -52,8 +52,8 @@ def _(numpy, pandas, passports, pca_res, scatter3d):
         right_index=True,
         how="left",
     )
-    taxa = scatter3d.Category(data.loc[:, "Taxon"])
-    countries = scatter3d.Category(data.loc[:, "Country"])
+    taxa = scatter3d.Category(data.loc[:, "Taxon"], editable=False)
+    countries = scatter3d.Category(data.loc[:, "Country"], editable=False)
     populations = scatter3d.Category(
         pandas.Series(
             numpy.full((data.shape[0],), "unclass"),
@@ -82,7 +82,6 @@ def _(mo, populations):
             set_pop_tick(counter["v"])
 
         setattr(populations, sub_attr, populations.subscribe(_cb))
-
     return (get_pop_tick,)
 
 
@@ -109,13 +108,9 @@ def _(widget):
 
 
 @app.cell
-def _(mo, populations):
-    pop_classes = set(populations.label_list)
-    pop_classes = sorted(pop_classes.difference(["unclass"]))
-    pop_classes.insert(0, "All")
-    pop_dropdown = mo.ui.dropdown(options=list(pop_classes), value="All")
-    pop_dropdown
-    return (pop_dropdown,)
+def _(widget):
+    print(widget.active_category)
+    return
 
 
 @app.cell
@@ -178,9 +173,29 @@ def _(pandas, passports):
 
 
 @app.cell
-def _(mo, pop_dropdown):
+def _(mo, widget):
+    get_active_tick, set_active_tick = mo.state(0)
+
+    sub_attr_active_cat = "_scatter3d_marimo_active_subscribed"
+    if not getattr(widget, sub_attr_active_cat, False):
+        active_cat_counter = {"v": 0}
+
+        def _cb(change):
+            # traitlets observer signature: change dict
+            active_cat_counter["v"] += 1
+            set_active_tick(active_cat_counter["v"])
+
+        widget.observe(_cb, names="active_category_t")
+        setattr(widget, sub_attr_active_cat, True)
+
+    return (get_active_tick,)
+
+
+@app.cell
+def _(mo, widget):
+    pop = widget.active_category_t or "All"
     mo.md(f"""
-    ## Population composition: {pop_dropdown.value}
+    ## Population composition: {pop}
     """)
     return
 
@@ -189,22 +204,32 @@ def _(mo, pop_dropdown):
 def _(
     count_countries_in_pop,
     count_taxa_in_pop,
+    get_active_tick,
     get_pop_tick,
     mo,
-    pop_dropdown,
-    populations,
+    cat_dropdown,
     px,
     widget,
 ):
-    _ = get_pop_tick()  # <-- rerun trigger when populations changes
+    # rerun when:
+    # - population assignments change
+    # - active category changes
+    _ = get_pop_tick()
+    _ = get_active_tick()
 
-    pop_country_counts = count_countries_in_pop(populations, widget, pop_dropdown.value)
-    pop_taxon_counts = count_taxa_in_pop(populations, widget, pop_dropdown.value)
+    active_category = cat_dropdown.value
 
-    taxon_pie_fig = px.pie(pop_taxon_counts, values="n", names="Taxon")
+    active_category_value = widget.active_category_t or "All"
+
+    country_counts = count_countries_in_pop(
+        active_category, widget, active_category_value
+    )
+    taxon_counts = count_taxa_in_pop(active_category, widget, active_category_value)
+
+    taxon_pie_fig = px.pie(taxon_counts, values="n", names="Taxon")
 
     geo_fig = px.choropleth(
-        pop_country_counts,
+        country_counts,
         locations="Country",
         locationmode="ISO-3",
         color="n",

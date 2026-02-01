@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.19.6"
+__generated_with = "0.19.7"
 app = marimo.App(width="medium")
 
 
@@ -21,10 +21,35 @@ def _():
     return PASSPORTS, PCA_RESULT, mo, numpy, pandas, px, scatter3d
 
 
-@app.cell(hide_code=True)
+@app.cell
 def _(mo):
     mo.md(r"""
     # Population delimitation practice
+
+    We have been tasked with analyzing some tomato genebank accessions.
+    From their [genotypes](data/tomato_genotypes.zip) we have built a [Principal Component Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) (you can see the actual PCA projections at the bottom).
+    PCA does not define populations by itself. It is a dimensionality-reduction method that summarizes patterns of genetic variation.
+    The identification of populations is therefore an interpretive step that depends on how we read and delimit structure in the PCA space.
+    We have also data regarding the taxa (SP: [Solanum pimpinellifolium](https://en.wikipedia.org/wiki/Solanum_pimpinellifolium), SLC: S. lycopersicum var. cerasiforme and SLL: [S. lycopersicum](https://en.wikipedia.org/wiki/Tomato) var lycopersicum) and country of origin of the accessions.
+
+    ## Plots
+
+    Once we have done the PCA our first task to delimit the populations that will be the base of further analyses, for that we plot the PCA in a 3D scatter plot that we can use to show the taxa and country categories as well as to determine which accessions belong to which populations.
+
+    The 3D scatter plot is the main working space of this practice. You will use it to:
+
+    - Explore genetic structure
+    - Compare genetic structure with passport information
+    - Make explicit decisions about population boundaries
+
+    In the 3D scatter plot you can alternate between the representation of the taxa, country of origin and populations using the dropdown menu. Also, you can use the plot legend to select at any time any of the labels, like the SP taxa or one particular country or population.
+    The taxa composition pie chart and world map will show at any time the taxa and country of origin of the accessions labeled with the label selected in the legend (or if none is selected the composition of the whole accession collection).
+
+    ## Population delimitation in the 3D scatter plot
+
+    When the "populations" category is selected in the drowdown menu you can use the [lasso tool](https://en.wikipedia.org/wiki/Lasso_tool) to add or remove accessions to any of the populations (labelled from pop1 to pop6).
+    Using this tool, you explicitly assign accessions to populations based on their position in genetic space.
+    You don't need to create six populations you may create just one just one, two, three, four, five or up to six.
     """)
     return
 
@@ -187,7 +212,6 @@ def _(mo, widget):
 
         widget.observe(_cb, names="active_category_t")
         setattr(widget, sub_attr_active_cat, True)
-
     return (get_active_tick,)
 
 
@@ -202,12 +226,12 @@ def _(mo, widget):
 
 @app.cell
 def _(
+    cat_dropdown,
     count_countries_in_pop,
     count_taxa_in_pop,
     get_active_tick,
     get_pop_tick,
     mo,
-    cat_dropdown,
     px,
     widget,
 ):
@@ -236,6 +260,32 @@ def _(
         color_continuous_scale="Viridis",
     )
     mo.hstack(items=[taxon_pie_fig, geo_fig], widths=[1.5, 3])
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    ## Questions
+
+    How many populations did you create?
+    Were some population boundaries clear while others were ambiguous?
+    What features of the PCA (gaps, gradients, overlap) contributed to this?
+    How do they compare with the populations created by the other students?
+
+    Did you identify any population that most students would likely delimit in a similar way?
+    When most people would agree in the population delimitation we could say that they are objective, meaning that all, or at least most, of the students would chose to delimit them in the same way.
+    Sometimes philosophers would refer to this kind of classes as [natural kinds](https://plato.stanford.edu/entries/natural-kinds/).
+    If you repeated this exercise one year from now, do you think you would define the same populations?
+
+    Would all the populations that you created be natural kinds or objective?
+
+    If you had used only the first two principal components instead of three, how might your population delimitation change?
+
+    Should taxon and country of origin be considered ground truth when evaluating population structure, or alternative hypotheses? Explain.
+
+    Among the populations created was the passport data, meaning taxa and country of origin, always consistent or you could have spotted any possible errors? If you think that you might have uncovered any error could you especulate about what could have caused it?
+    """)
     return
 
 

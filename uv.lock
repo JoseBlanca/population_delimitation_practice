@@ -119,7 +119,7 @@ wheels = [
 
 [[package]]
 name = "ipython"
-version = "9.9.0"
+version = "9.10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama", marker = "sys_platform == 'win32'" },
@@ -133,9 +133,9 @@ dependencies = [
     { name = "stack-data" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/46/dd/fb08d22ec0c27e73c8bc8f71810709870d51cadaf27b7ddd3f011236c100/ipython-9.9.0.tar.gz", hash = "sha256:48fbed1b2de5e2c7177eefa144aba7fcb82dac514f09b57e2ac9da34ddb54220", size = 4425043, upload-time = "2026-01-05T12:36:46.233Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a6/60/2111715ea11f39b1535bed6024b7dec7918b71e5e5d30855a5b503056b50/ipython-9.10.0.tar.gz", hash = "sha256:cd9e656be97618a0676d058134cd44e6dc7012c0e5cb36a9ce96a8c904adaf77", size = 4426526, upload-time = "2026-02-02T10:00:33.594Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/86/92/162cfaee4ccf370465c5af1ce36a9eacec1becb552f2033bb3584e6f640a/ipython-9.9.0-py3-none-any.whl", hash = "sha256:b457fe9165df2b84e8ec909a97abcf2ed88f565970efba16b1f7229c283d252b", size = 621431, upload-time = "2026-01-05T12:36:44.669Z" },
+    { url = "https://files.pythonhosted.org/packages/3d/aa/898dec789a05731cd5a9f50605b7b44a72bd198fd0d4528e11fc610177cc/ipython-9.10.0-py3-none-any.whl", hash = "sha256:c6ab68cc23bba8c7e18e9b932797014cc61ea7fd6f19de180ab9ba73e65ee58d", size = 622774, upload-time = "2026-02-02T10:00:31.503Z" },
 ]
 
 [[package]]
@@ -394,7 +394,7 @@ requires-dist = [
     { name = "marimo", specifier = ">=0.19.6" },
     { name = "pandas", specifier = ">=3.0.0" },
     { name = "plotly", specifier = ">=6.5.2" },
-    { name = "scatter3d-anywidget", specifier = ">=0.1.7" },
+    { name = "scatter3d-anywidget", specifier = ">=0.1.8" },
 ]
 
 [[package]]
@@ -525,16 +525,16 @@ wheels = [
 
 [[package]]
 name = "scatter3d-anywidget"
-version = "0.1.7"
+version = "0.1.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
     { name = "narwhals" },
     { name = "numpy" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ca/79/21a89efa07b5d54107dd3e2a955fa36df7e525673c6ed85ec7c428b2e6a9/scatter3d_anywidget-0.1.7.tar.gz", hash = "sha256:06b394d7ac5271bf788a0528444e7a1bbf9360c9cea07066f62c7bb58fb4a98c", size = 819361, upload-time = "2026-02-01T09:56:28.321Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/63/53/6f04c10b86a3aa0addff3b1115a8a42253722c21950150d3fc95362dc20a/scatter3d_anywidget-0.1.9.tar.gz", hash = "sha256:c604cae8ff8c32cee4ff7db7c4866e3181ca3dbae62b6ff903c21fbaace77f4a", size = 820149, upload-time = "2026-02-02T10:12:37.522Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ae/e5/95c2f0423225f038033da7044487d706a5514e4eb4cb6391557d64df7257/scatter3d_anywidget-0.1.7-py3-none-any.whl", hash = "sha256:f6f9236f0d724dec2a2fe69349f057be20d44873eb2fbb9a3cf7d055f0912b3d", size = 821052, upload-time = "2026-02-01T09:56:32.004Z" },
+    { url = "https://files.pythonhosted.org/packages/fe/80/b8a1813e43ff570ad2a1ce595b9d3be66067cd1f37bd364126b11ed9c0fa/scatter3d_anywidget-0.1.9-py3-none-any.whl", hash = "sha256:c7cde482f1aa57f268690575caaaa4f426d3bf173e50b86ae834818b41040950", size = 821866, upload-time = "2026-02-02T10:12:39.53Z" },
 ]
 
 [[package]]

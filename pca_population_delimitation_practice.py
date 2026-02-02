@@ -193,7 +193,6 @@ def _(pandas, passports):
                 :, ("Taxon", "n")
             ]
         return pop_taxon_counts
-
     return count_countries_in_pop, count_taxa_in_pop
 
 
@@ -216,25 +215,7 @@ def _(mo, widget):
 
 
 @app.cell
-def _(mo, widget):
-    pop = widget.active_category_t or "All"
-    mo.md(f"""
-    ## Population composition: {pop}
-    """)
-    return
-
-
-@app.cell
-def _(
-    cat_dropdown,
-    count_countries_in_pop,
-    count_taxa_in_pop,
-    get_active_tick,
-    get_pop_tick,
-    mo,
-    px,
-    widget,
-):
+def _(cat_dropdown, get_active_tick, get_pop_tick, mo, widget):
     # rerun when:
     # - population assignments change
     # - active category changes
@@ -242,9 +223,24 @@ def _(
     _ = get_active_tick()
 
     active_category = cat_dropdown.value
-
     active_category_value = widget.active_category_t or "All"
 
+    mo.md(f"""
+    ## Population composition: {active_category_value}
+    """)
+    return active_category, active_category_value
+
+
+@app.cell
+def _(
+    active_category,
+    active_category_value,
+    count_countries_in_pop,
+    count_taxa_in_pop,
+    mo,
+    px,
+    widget,
+):
     country_counts = count_countries_in_pop(
         active_category, widget, active_category_value
     )

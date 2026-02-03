@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>pca population delimitation practice</title>
+    <script type="module" crossorigin src="./assets/index-DGasP9Lh.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-DItdS47A.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-D8GwTfvk.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-BKtXLv3a.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-BGmjiNul.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-DeeZ7FnK.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-ZmTK25f3.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-Ce8wRjuQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/hotkeys-BHHWjLlp.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-DIUKKfEy.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-YC1gW_kJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-C9fstfnp.js">
+    <link rel="modulepreload" crossorigin href="./assets/Combination-CMPwuAmi.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-CJhvWPOk.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-uzvC4uAK.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-CnW3RofX.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-DdfN0k2d.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-V5IdpNiR.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CEc2ajau.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-rmUWldD_.js">
+    <link rel="modulepreload" crossorigin href="./assets/_Uint8Array-BGESiCQL.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseIsEqual-B9N9Mw_N.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-DO6uJBas.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-CAG_dYON.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-Duhs3RiJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-BBX6ug-N.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-Cg4WLWh2.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-DXvhzCGS.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-B6Cb__3x.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-CrO5-0RA.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-CIrPQIbt.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-DercMavo.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-CO2AyNfd.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-BsVD4CdD.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BGkTcW3U.js">
+    <link rel="modulepreload" crossorigin href="./assets/toString-DlRqgfqz.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasUnicode-CWqKLxBC.js">
+    <link rel="modulepreload" crossorigin href="./assets/assertNever-CBU83Y6o.js">
+    <link rel="modulepreload" crossorigin href="./assets/_arrayReduce-TT0iOGKY.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-D35CBukS.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-_Aax6sXd.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-DUdVAZI8.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-Bul8mtFs.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-MM7JYRxj.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-Dnna-AUO.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DBwNzi3C.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-ChS0Dc_R.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CtsanegT.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BIKFl48f.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-B0VqT_4z.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-TiFCI16_.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Cayq-K1c.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BYyu59D8.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Gqv0jSNr.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-CtmkcLz7.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-CgbKQM5E.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-CH5Rj0g8.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseProperty-NKyJO2oh.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-6sUe0ZdD.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-B3mjKxHe.js">
+    <link rel="modulepreload" crossorigin href="./assets/toInteger-CDcO32Gx.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-B9y7063w.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-U5Goe76G.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-BpZ7g6ok.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-DaIKav-i.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-DwagBitu.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-B-6unW-7.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-C3JY7O_u.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-DEwfrKeS.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-C8GlnP-4.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-BrGyZf9c.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-DwQffb13.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-CxGKN4C_.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CdxIjAOP.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-Be1daUcS.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-D5NcotGm.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-DBO30D7K.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-iQunIAXf.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-CEHRCdjA.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-JwD-oSsl.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-c6GXymzg.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-Bup4EGrp.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-pAun1m1X.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DHZUhGz-.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-Gz-GJzym.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-8sn_4qbh.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-C8uQmBAN.js">
+    <link rel="modulepreload" crossorigin href="./assets/mode-DX8pdI-l.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-C4XRy1BE.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-2SszdW9t.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-DUzsIXtq.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-Bv2DBpIS.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-BCOZVFBt.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-6uJrSKbw.js">
+    <link rel="modulepreload" crossorigin href="./assets/capitalize-CmNnkG9y.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-CQ15EONK.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-BD5o34_i.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-CQd-1kjx.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-CyqGun26.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-B65rDESJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/ai-model-dropdown-71lgLrLy.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-D_rSvXvJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-BMPhtTJQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-C92Rrpmf.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-CRZ52CKf.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-BGrCWNss.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-ChCiwl15.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-Bdnnp5fe.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-CUbWEBci.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-Bw5bzt4a.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-B0OJBphG.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-BfXVTTtD.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-5rudBbo3.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-BhONVREY.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-DjukyIj4.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-D51fcwZX.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-yzHjsVJt.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-CVUXBqX6.js">
+    <link rel="modulepreload" crossorigin href="./assets/katex-Dc8yG8NU.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-DhMlG2dP.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-DhzFN2CJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-BhCZMKuQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-24p6hn99.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-DNVQZNFu.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-CQZqVk1Z.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-DuIDx9mD.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-W1SWxSE3.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-pRRbZZHE.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-DcYggVWP.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-Dhn1r-h6.js">
+    <link rel="modulepreload" crossorigin href="./assets/maps-t9yNKYA8.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-B2LJnKU3.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-DD4AwVTU.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-CS4kbWl2.js">
+    <link rel="modulepreload" crossorigin href="./assets/range-D2UKkEg-.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-DZR6ewbN.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-CknFTI_u.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-Cs1JbsV6.js">
+    <link rel="modulepreload" crossorigin href="./assets/play-BPIh-ZEU.js">
+    <link rel="modulepreload" crossorigin href="./assets/chat-components-CGlO4yUw.js">
+    <link rel="modulepreload" crossorigin href="./assets/isEmpty-CgX_-6Mt.js">
+    <link rel="modulepreload" crossorigin href="./assets/chat-display-B4mGvJ0X.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeleteCell-5uYlTcQZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-BhEXrzsb.js">
+    <link rel="modulepreload" crossorigin href="./assets/process-output-CagdHMzs.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-CuXvdYPX.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-DaPAPabU.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-DpMp6qko.js">
+    <link rel="modulepreload" crossorigin href="./assets/add-cell-with-ai-pVFp5LZG.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-W42b2ZIs.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-CqXXKtIq.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-D1kBp3jX.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-CxMrs0B_.js">
+    <link rel="modulepreload" crossorigin href="./assets/toggle-jWKnIArU.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-DKH14XH0.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-CbPtIlnM.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-5Rdwpmr3.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-Ctj_10o2.js">
+    <link rel="modulepreload" crossorigin href="./assets/utilities.esm-CIPARd6-.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-DcxjrFFt.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAddCell-BmeZUK02.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-BhExYOph.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-DyP9LVLc.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-video-camera-DW3v07j2.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-DuQOSW7G.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-DLEiQDS3.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-DUA_Rz_a.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-BEg1eC0P.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-B1Xeh6vA.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-ZPd9PxYl.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-CS34eOZi.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-BiQYf0aU.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-D8BOePqo.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-CycJImp8.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFlatten-CUZNxU8H.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-D-7VEN0q.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-B_6Qi5aM.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-XLwHyDBr.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-B9SUL40m.js">
+    <link rel="modulepreload" crossorigin href="./assets/house-DhFkiXz7.js">
+    <link rel="modulepreload" crossorigin href="./assets/settings-DOXWMfVd.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-C8Tw_XXG.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-2AjO7UK5.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-jmgGt1lS.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-B7vuddcd.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CikhHYAB.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="">import%20marimo%0A%0A__generated_with%20%3D%20%220.19.7%22%0Aapp%20%3D%20marimo.App(width%3D%22medium%22)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%0A%20%20%20%20MY_URL%20%3D%20mo.notebook_location()%0A%20%20%20%20PUBLIC_DIR%20%3D%20MY_URL%20%2F%20%22public%22%0A%20%20%20%20DATA_DIR%20%3D%20%22data%22%0A%20%20%20%20DATA_DIR%20%3D%20PUBLIC_DIR%20%2F%20DATA_DIR%0A%20%20%20%20WHEEL_DIR%20%3D%20PUBLIC_DIR%20%2F%20%22wheels%22%0A%20%20%20%20SCATTER3D_WHEEL%20%3D%20WHEEL_DIR%20%2F%20%22scatter3d_anywidget-0.1.12-py3-none-any.whl%22%0A%20%20%20%20PASSPORTS_CSV_FNAME%20%3D%20%22tomato_passports.csv%22%0A%20%20%20%20PASSPORTS%20%3D%20DATA_DIR%20%2F%20PASSPORTS_CSV_FNAME%0A%20%20%20%20PCA_CSV_FNAME%20%3D%20%22tomato_pca.csv%22%0A%20%20%20%20PCA_RESULT%20%3D%20DATA_DIR%20%2F%20PCA_CSV_FNAME%0A%20%20%20%20return%20PASSPORTS%2C%20PCA_RESULT%2C%20SCATTER3D_WHEEL%2C%20mo%0A%0A%0A%40app.cell%0Aasync%20def%20_(SCATTER3D_WHEEL)%3A%0A%20%20%20%20import%20numpy%0A%20%20%20%20import%20pandas%0A%0A%20%20%20%20%23%20In%20WASM%2FPyodide%2C%20micropip%20exists%3B%20outside%20it%20may%20not.%0A%20%20%20%20try%3A%0A%20%20%20%20%20%20%20%20import%20micropip%0A%0A%20%20%20%20%20%20%20%20%23%20WASM%20path%3A%20install%20deps%20then%20import%0A%20%20%20%20%20%20%20%20await%20micropip.install(%22plotly%22)%0A%20%20%20%20%20%20%20%20await%20micropip.install(str(SCATTER3D_WHEEL))%0A%0A%20%20%20%20except%20ImportError%3A%0A%20%20%20%20%20%20%20%20%23%20Not%20running%20in%20Pyodide%2FWASM%0A%20%20%20%20%20%20%20%20pass%0A%0A%20%20%20%20import%20plotly.express%20as%20px%0A%20%20%20%20import%20scatter3d%0A%20%20%20%20return%20numpy%2C%20pandas%2C%20px%2C%20scatter3d%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%20Population%20delimitation%20practice%0A%0A%20%20%20%20We%20have%20been%20tasked%20with%20analyzing%20some%20tomato%20genebank%20accessions.%0A%20%20%20%20From%20their%20%5Bgenotypes%5D(data%2Ftomato_genotypes.zip)%20we%20have%20built%20a%20%5BPrincipal%20Component%20Analysis%5D(https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FPrincipal_component_analysis)%20(you%20can%20see%20the%20actual%20PCA%20projections%20at%20the%20bottom).%0A%20%20%20%20PCA%20does%20not%20define%20populations%20by%20itself.%20It%20is%20a%20dimensionality-reduction%20method%20that%20summarizes%20patterns%20of%20genetic%20variation.%0A%20%20%20%20The%20identification%20of%20populations%20is%20therefore%20an%20interpretive%20step%20that%20depends%20on%20how%20we%20read%20and%20delimit%20structure%20in%20the%20PCA%20space.%0A%20%20%20%20We%20have%20also%20data%20regarding%20the%20taxa%20(SP%3A%20%5BSolanum%20pimpinellifolium%5D(https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FSolanum_pimpinellifolium)%2C%20SLC%3A%20S.%20lycopersicum%20var.%20cerasiforme%20and%20SLL%3A%20%5BS.%20lycopersicum%5D(https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FTomato)%20var%20lycopersicum)%20and%20country%20of%20origin%20of%20the%20accessions.%0A%0A%20%20%20%20%23%23%20Plots%0A%0A%20%20%20%20Once%20we%20have%20done%20the%20PCA%20our%20first%20task%20to%20delimit%20the%20populations%20that%20will%20be%20the%20base%20of%20further%20analyses%2C%20for%20that%20we%20plot%20the%20PCA%20in%20a%203D%20scatter%20plot%20that%20we%20can%20use%20to%20show%20the%20taxa%20and%20country%20categories%20as%20well%20as%20to%20determine%20which%20accessions%20belong%20to%20which%20populations.%0A%0A%20%20%20%20The%203D%20scatter%20plot%20is%20the%20main%20working%20space%20of%20this%20practice.%20You%20will%20use%20it%20to%3A%0A%0A%20%20%20%20-%20Explore%20genetic%20structure%0A%20%20%20%20-%20Compare%20genetic%20structure%20with%20passport%20information%0A%20%20%20%20-%20Make%20explicit%20decisions%20about%20population%20boundaries%0A%0A%20%20%20%20In%20the%203D%20scatter%20plot%20you%20can%20alternate%20between%20the%20representation%20of%20the%20taxa%2C%20country%20of%20origin%20and%20populations%20using%20the%20dropdown%20menu.%20Also%2C%20you%20can%20use%20the%20plot%20legend%20to%20select%20at%20any%20time%20any%20of%20the%20labels%2C%20like%20the%20SP%20taxa%20or%20one%20particular%20country%20or%20population.%0A%20%20%20%20The%20taxa%20composition%20pie%20chart%20and%20world%20map%20will%20show%20at%20any%20time%20the%20taxa%20and%20country%20of%20origin%20of%20the%20accessions%20labeled%20with%20the%20label%20selected%20in%20the%20legend%20(or%20if%20none%20is%20selected%20the%20composition%20of%20the%20whole%20accession%20collection).%0A%0A%20%20%20%20%23%23%20Population%20delimitation%20in%20the%203D%20scatter%20plot%0A%0A%20%20%20%20When%20the%20%22populations%22%20category%20is%20selected%20in%20the%20drowdown%20menu%20you%20can%20use%20the%20%5Blasso%20tool%5D(https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FLasso_tool)%20to%20add%20or%20remove%20accessions%20to%20any%20of%20the%20populations%20(labelled%20from%20pop1%20to%20pop6).%0A%20%20%20%20Using%20this%20tool%2C%20you%20explicitly%20assign%20accessions%20to%20populations%20based%20on%20their%20position%20in%20genetic%20space.%0A%20%20%20%20You%20don't%20need%20to%20create%20six%20populations%20you%20may%20create%20just%20one%20just%20one%2C%20two%2C%20three%2C%20four%2C%20five%20or%20up%20to%20six.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(PASSPORTS%2C%20pandas)%3A%0A%20%20%20%20passports%20%3D%20pandas.read_csv(PASSPORTS%2C%20index_col%3D%22id%22)%0A%20%20%20%20passports%5B%22Country%22%5D%20%3D%20passports%5B%22Country%22%5D.replace(%7B%22PER_N%22%3A%20%22PER%22%7D)%0A%20%20%20%20return%20(passports%2C)%0A%0A%0A%40app.cell%0Adef%20_(PCA_RESULT%2C%20pandas)%3A%0A%20%20%20%20pca_res%20%3D%20pandas.read_csv(PCA_RESULT%2C%20index_col%3D%22id%22)%0A%20%20%20%20return%20(pca_res%2C)%0A%0A%0A%40app.cell%0Adef%20_(numpy%2C%20pandas%2C%20passports%2C%20pca_res%2C%20scatter3d)%3A%0A%20%20%20%20xyz%20%3D%20pca_res.iloc%5B%3A%2C%20%3A3%5D%0A%20%20%20%20data%20%3D%20pandas.merge(%0A%20%20%20%20%20%20%20%20xyz%2C%0A%20%20%20%20%20%20%20%20passports.loc%5B%3A%2C%20(%22Taxon%22%2C%20%22Country%22)%5D%2C%0A%20%20%20%20%20%20%20%20left_index%3DTrue%2C%0A%20%20%20%20%20%20%20%20right_index%3DTrue%2C%0A%20%20%20%20%20%20%20%20how%3D%22left%22%2C%0A%20%20%20%20)%0A%20%20%20%20taxa%20%3D%20scatter3d.Category(data.loc%5B%3A%2C%20%22Taxon%22%5D%2C%20editable%3DFalse)%0A%20%20%20%20countries%20%3D%20scatter3d.Category(data.loc%5B%3A%2C%20%22Country%22%5D%2C%20editable%3DFalse)%0A%20%20%20%20populations%20%3D%20scatter3d.Category(%0A%20%20%20%20%20%20%20%20pandas.Series(%0A%20%20%20%20%20%20%20%20%20%20%20%20numpy.full((data.shape%5B0%5D%2C)%2C%20%22unclass%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20index%3Ddata.index%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20name%3D%22populations%22%2C%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20)%0A%20%20%20%20populations.set_label_list(%5B%22unclass%22%2C%20%22pop1%22%2C%20%22pop2%22%2C%20%22pop3%22%2C%20%22pop4%22%2C%20%22pop5%22%5D)%0A%20%20%20%20widget%20%3D%20scatter3d.Scatter3dWidget(%0A%20%20%20%20%20%20%20%20data.iloc%5B%3A%2C%20%3A3%5D.to_numpy()%2C%20category%3Dtaxa%2C%20point_ids%3Dlist(data.index)%0A%20%20%20%20)%0A%20%20%20%20widget.height%20%3D%20800%0A%20%20%20%20return%20countries%2C%20populations%2C%20taxa%2C%20widget%0A%0A%0A%40app.cell%0Adef%20_(mo%2C%20populations)%3A%0A%20%20%20%20get_pop_tick%2C%20set_pop_tick%20%3D%20mo.state(0)%0A%0A%20%20%20%20sub_attr%20%3D%20%22_scatter3d_marimo_pop_sub_id%22%0A%20%20%20%20if%20getattr(populations%2C%20sub_attr%2C%20None)%20is%20None%3A%0A%20%20%20%20%20%20%20%20counter%20%3D%20%7B%22v%22%3A%200%7D%0A%0A%20%20%20%20%20%20%20%20def%20_cb(*_a%2C%20**_k)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20counter%5B%22v%22%5D%20%2B%3D%201%0A%20%20%20%20%20%20%20%20%20%20%20%20set_pop_tick(counter%5B%22v%22%5D)%0A%0A%20%20%20%20%20%20%20%20setattr(populations%2C%20sub_attr%2C%20populations.subscribe(_cb))%0A%20%20%20%20return%20(get_pop_tick%2C)%0A%0A%0A%40app.cell%0Adef%20_(countries%2C%20mo%2C%20populations%2C%20taxa)%3A%0A%20%20%20%20cat_dropdown%20%3D%20mo.ui.dropdown(%0A%20%20%20%20%20%20%20%20options%3D%7B%22taxa%22%3A%20taxa%2C%20%22countries%22%3A%20countries%2C%20%22populations%22%3A%20populations%7D%2C%0A%20%20%20%20%20%20%20%20value%3D%22taxa%22%2C%0A%20%20%20%20)%0A%20%20%20%20cat_dropdown%0A%20%20%20%20return%20(cat_dropdown%2C)%0A%0A%0A%40app.cell%0Adef%20_(cat_dropdown%2C%20widget)%3A%0A%20%20%20%20widget.category%20%3D%20cat_dropdown.value%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(widget)%3A%0A%20%20%20%20widget%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(widget)%3A%0A%20%20%20%20print(widget.active_category)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(pandas%2C%20passports)%3A%0A%20%20%20%20def%20count_countries_in_pop(populations%2C%20widget%2C%20pop)%3A%0A%20%20%20%20%20%20%20%20classification%20%3D%20pandas.Series(%0A%20%20%20%20%20%20%20%20%20%20%20%20populations.values.values%2C%20index%3Dwidget.point_ids%2C%20name%3D%22population%22%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20class_country%20%3D%20pandas.merge(%0A%20%20%20%20%20%20%20%20%20%20%20%20classification%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20passports.loc%5B%3A%2C%20%22Country%22%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20left_index%3DTrue%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20right_index%3DTrue%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20how%3D%22left%22%2C%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20if%20pop%20%3D%3D%20%22All%22%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20pop_country_counts%20%3D%20class_country.loc%5B%3A%2C%20%22Country%22%5D.value_counts()%0A%20%20%20%20%20%20%20%20%20%20%20%20pop_country_counts%20%3D%20pandas.DataFrame(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%22Country%22%3A%20pop_country_counts.index%2C%20%22n%22%3A%20pop_country_counts%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20country_counts%20%3D%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20class_country.groupby(%5B%22population%22%2C%20%22Country%22%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.size()%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.reset_index(name%3D%22n%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20%20%20%20%20pop_country_counts%20%3D%20country_counts%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20country_counts%5B%22population%22%5D%20%3D%3D%20pop%0A%20%20%20%20%20%20%20%20%20%20%20%20%5D.loc%5B%3A%2C%20(%22Country%22%2C%20%22n%22)%5D%0A%20%20%20%20%20%20%20%20return%20pop_country_counts%0A%0A%20%20%20%20def%20count_taxa_in_pop(populations%2C%20widget%2C%20pop)%3A%0A%20%20%20%20%20%20%20%20classification%20%3D%20pandas.Series(%0A%20%20%20%20%20%20%20%20%20%20%20%20populations.values.values%2C%20index%3Dwidget.point_ids%2C%20name%3D%22population%22%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20class_taxon%20%3D%20pandas.merge(%0A%20%20%20%20%20%20%20%20%20%20%20%20classification%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20passports.loc%5B%3A%2C%20%22Taxon%22%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20left_index%3DTrue%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20right_index%3DTrue%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20how%3D%22left%22%2C%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20if%20pop%20%3D%3D%20%22All%22%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20pop_taxon_counts%20%3D%20class_taxon.loc%5B%3A%2C%20%22Taxon%22%5D.value_counts()%0A%20%20%20%20%20%20%20%20%20%20%20%20pop_taxon_counts%20%3D%20pandas.DataFrame(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%22Taxon%22%3A%20pop_taxon_counts.index%2C%20%22n%22%3A%20pop_taxon_counts%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20taxon_counts%20%3D%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20class_taxon.groupby(%5B%22population%22%2C%20%22Taxon%22%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.size()%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.reset_index(name%3D%22n%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20%20%20%20%20pop_taxon_counts%20%3D%20taxon_counts%5Btaxon_counts%5B%22population%22%5D%20%3D%3D%20pop%5D.loc%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3A%2C%20(%22Taxon%22%2C%20%22n%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%20%20%20%20return%20pop_taxon_counts%0A%20%20%20%20return%20count_countries_in_pop%2C%20count_taxa_in_pop%0A%0A%0A%40app.cell%0Adef%20_(mo%2C%20widget)%3A%0A%20%20%20%20get_active_tick%2C%20set_active_tick%20%3D%20mo.state(0)%0A%0A%20%20%20%20sub_attr_active_cat%20%3D%20%22_scatter3d_marimo_active_subscribed%22%0A%20%20%20%20if%20not%20getattr(widget%2C%20sub_attr_active_cat%2C%20False)%3A%0A%20%20%20%20%20%20%20%20active_cat_counter%20%3D%20%7B%22v%22%3A%200%7D%0A%0A%20%20%20%20%20%20%20%20def%20_cb(change)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20traitlets%20observer%20signature%3A%20change%20dict%0A%20%20%20%20%20%20%20%20%20%20%20%20active_cat_counter%5B%22v%22%5D%20%2B%3D%201%0A%20%20%20%20%20%20%20%20%20%20%20%20set_active_tick(active_cat_counter%5B%22v%22%5D)%0A%0A%20%20%20%20%20%20%20%20widget.observe(_cb%2C%20names%3D%22active_category_t%22)%0A%20%20%20%20%20%20%20%20setattr(widget%2C%20sub_attr_active_cat%2C%20True)%0A%20%20%20%20return%20(get_active_tick%2C)%0A%0A%0A%40app.cell%0Adef%20_(cat_dropdown%2C%20get_active_tick%2C%20get_pop_tick%2C%20mo%2C%20widget)%3A%0A%20%20%20%20%23%20rerun%20when%3A%0A%20%20%20%20%23%20-%20population%20assignments%20change%0A%20%20%20%20%23%20-%20active%20category%20changes%0A%20%20%20%20_%20%3D%20get_pop_tick()%0A%20%20%20%20_%20%3D%20get_active_tick()%0A%0A%20%20%20%20active_category%20%3D%20cat_dropdown.value%0A%20%20%20%20active_category_value%20%3D%20widget.active_category_t%20or%20%22All%22%0A%0A%20%20%20%20mo.md(f%22%22%22%0A%20%20%20%20%23%23%20Population%20composition%3A%20%7Bactive_category_value%7D%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%20active_category%2C%20active_category_value%0A%0A%0A%40app.cell%0Adef%20_(%0A%20%20%20%20active_category%2C%0A%20%20%20%20active_category_value%2C%0A%20%20%20%20count_countries_in_pop%2C%0A%20%20%20%20count_taxa_in_pop%2C%0A%20%20%20%20mo%2C%0A%20%20%20%20px%2C%0A%20%20%20%20widget%2C%0A)%3A%0A%20%20%20%20country_counts%20%3D%20count_countries_in_pop(%0A%20%20%20%20%20%20%20%20active_category%2C%20widget%2C%20active_category_value%0A%20%20%20%20)%0A%20%20%20%20taxon_counts%20%3D%20count_taxa_in_pop(active_category%2C%20widget%2C%20active_category_value)%0A%0A%20%20%20%20taxon_pie_fig%20%3D%20px.pie(taxon_counts%2C%20values%3D%22n%22%2C%20names%3D%22Taxon%22)%0A%0A%20%20%20%20geo_fig%20%3D%20px.choropleth(%0A%20%20%20%20%20%20%20%20country_counts%2C%0A%20%20%20%20%20%20%20%20locations%3D%22Country%22%2C%0A%20%20%20%20%20%20%20%20locationmode%3D%22ISO-3%22%2C%0A%20%20%20%20%20%20%20%20color%3D%22n%22%2C%0A%20%20%20%20%20%20%20%20color_continuous_scale%3D%22Viridis%22%2C%0A%20%20%20%20)%0A%20%20%20%20mo.hstack(items%3D%5Btaxon_pie_fig%2C%20geo_fig%5D%2C%20widths%3D%5B1.5%2C%203%5D)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%23%20Questions%0A%0A%20%20%20%20How%20many%20populations%20did%20you%20create%3F%0A%20%20%20%20Were%20some%20population%20boundaries%20clear%20while%20others%20were%20ambiguous%3F%0A%20%20%20%20What%20features%20of%20the%20PCA%20(gaps%2C%20gradients%2C%20overlap)%20contributed%20to%20this%3F%0A%20%20%20%20How%20do%20they%20compare%20with%20the%20populations%20created%20by%20the%20other%20students%3F%0A%0A%20%20%20%20Did%20you%20identify%20any%20population%20that%20most%20students%20would%20likely%20delimit%20in%20a%20similar%20way%3F%0A%20%20%20%20When%20most%20people%20would%20agree%20in%20the%20population%20delimitation%20we%20could%20say%20that%20they%20are%20objective%2C%20meaning%20that%20all%2C%20or%20at%20least%20most%2C%20of%20the%20students%20would%20chose%20to%20delimit%20them%20in%20the%20same%20way.%0A%20%20%20%20Sometimes%20philosophers%20would%20refer%20to%20this%20kind%20of%20classes%20as%20%5Bnatural%20kinds%5D(https%3A%2F%2Fplato.stanford.edu%2Fentries%2Fnatural-kinds%2F).%0A%20%20%20%20If%20you%20repeated%20this%20exercise%20one%20year%20from%20now%2C%20do%20you%20think%20you%20would%20define%20the%20same%20populations%3F%0A%0A%20%20%20%20Would%20all%20the%20populations%20that%20you%20created%20be%20natural%20kinds%20or%20objective%3F%0A%0A%20%20%20%20If%20you%20had%20used%20only%20the%20first%20two%20principal%20components%20instead%20of%20three%2C%20how%20might%20your%20population%20delimitation%20change%3F%0A%0A%20%20%20%20Should%20taxon%20and%20country%20of%20origin%20be%20considered%20ground%20truth%20when%20evaluating%20population%20structure%2C%20or%20alternative%20hypotheses%3F%20Explain.%0A%0A%20%20%20%20Among%20the%20populations%20created%20was%20the%20passport%20data%2C%20meaning%20taxa%20and%20country%20of%20origin%2C%20always%20consistent%20or%20you%20could%20have%20spotted%20any%20possible%20errors%3F%20If%20you%20think%20that%20you%20might%20have%20uncovered%20any%20error%20could%20you%20especulate%20about%20what%20could%20have%20caused%20it%3F%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%23%20Passports%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(passports)%3A%0A%20%20%20%20passports%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%23%20PCA%20projections%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(pca_res)%3A%0A%20%20%20%20pca_res%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      window.__MARIMO_MOUNT_CONFIG__ = {
+            "filename": "notebook.py",
+            "mode": "edit",
+            "version": "0.19.7",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "uv"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "medium"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        };
+    </script>
+  </body>
+</html>

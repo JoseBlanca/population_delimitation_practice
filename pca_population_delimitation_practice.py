@@ -6,19 +6,42 @@ app = marimo.App(width="medium")
 
 @app.cell
 def _():
-    from pathlib import Path
-
     import marimo as mo
-    import pandas
-    import numpy
-    import scatter3d
-    import plotly.express as px
 
-    PROJECT_DIR = Path(__file__).parent
-    DATA_DIR = PROJECT_DIR / "data"
-    PASSPORTS = DATA_DIR / "tomato_passports.csv"
-    PCA_RESULT = DATA_DIR / "tomato_pca.csv"
-    return PASSPORTS, PCA_RESULT, mo, numpy, pandas, px, scatter3d
+    MY_URL = mo.notebook_location()
+    PUBLIC_DIR = MY_URL / "public"
+    DATA_DIR = "data"
+    DATA_DIR = PUBLIC_DIR / DATA_DIR
+    WHEEL_DIR = PUBLIC_DIR / "wheels"
+    SCATTER3D_WHEEL = WHEEL_DIR / "scatter3d_anywidget-0.1.12-py3-none-any.whl"
+    PASSPORTS_CSV_FNAME = "tomato_passports.csv"
+    PASSPORTS = DATA_DIR / PASSPORTS_CSV_FNAME
+    PCA_CSV_FNAME = "tomato_pca.csv"
+    PCA_RESULT = DATA_DIR / PCA_CSV_FNAME
+    return mo, PASSPORTS, PCA_RESULT, SCATTER3D_WHEEL
+
+
+@app.cell
+async def _(SCATTER3D_WHEEL):
+    import numpy
+    import pandas
+
+    # In WASM/Pyodide, micropip exists; outside it may not.
+    try:
+        import micropip
+
+        # WASM path: install deps then import
+        await micropip.install("plotly")
+        await micropip.install(str(SCATTER3D_WHEEL))
+
+    except ImportError:
+        # Not running in Pyodide/WASM
+        pass
+
+    import plotly.express as px
+    import scatter3d
+
+    return numpy, pandas, px, scatter3d
 
 
 @app.cell
@@ -193,6 +216,7 @@ def _(pandas, passports):
                 :, ("Taxon", "n")
             ]
         return pop_taxon_counts
+
     return count_countries_in_pop, count_taxa_in_pop
 
 

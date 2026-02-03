@@ -6,7 +6,10 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "marimo>=0.19.6",
-    "pandas>=3.0.0",
+    "pandas>=2.3.3",
     "plotly>=6.5.2",
-    "scatter3d-anywidget>=0.1.8",
+    "scatter3d-anywidget>=0.1.12",
 ]
+
+[tool.uv.sources]
+scatter3d-anywidget = { path = "../../../devel/any_scatter3d/dist/scatter3d_anywidget-0.1.12-py3-none-any.whl" }

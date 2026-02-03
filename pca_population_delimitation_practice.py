@@ -18,7 +18,7 @@ def _():
     PASSPORTS = DATA_DIR / PASSPORTS_CSV_FNAME
     PCA_CSV_FNAME = "tomato_pca.csv"
     PCA_RESULT = DATA_DIR / PCA_CSV_FNAME
-    return mo, PASSPORTS, PCA_RESULT, SCATTER3D_WHEEL
+    return PASSPORTS, PCA_RESULT, SCATTER3D_WHEEL, mo
 
 
 @app.cell
@@ -78,8 +78,31 @@ def _(mo):
 
 
 @app.cell
-def _(PASSPORTS, pandas):
-    passports = pandas.read_csv(PASSPORTS, index_col="id")
+def _():
+    import io
+
+    try:
+        from pyodide.http import pyfetch
+
+        async def get_file(path: str):
+            resp = await pyfetch(path)
+            resp.raise_for_status()
+            data = await resp.bytes()
+            return io.BytesIO(data)
+
+    except ImportError:
+
+        async def get_file(path: str):
+            # keep signature async so callers can always await
+            return io.BytesIO(open(path, "rb").read())
+
+    return (get_file,)
+
+
+@app.cell
+async def _(PASSPORTS, get_file, pandas):
+    buf = await get_file(PASSPORTS)
+    passports = pandas.read_csv(buf, index_col="id")
     passports["Country"] = passports["Country"].replace({"PER_N": "PER"})
     return (passports,)
 

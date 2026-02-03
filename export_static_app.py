@@ -45,7 +45,7 @@ def export_notebook_as_app(notebook: Path, output_dir: Path, mode: Mode):
 
 
 remove_dir(OUPUT_DIR)
-export_notebook_as_app(PCA_DELIMITATION_NOTEBOOK, OUPUT_DIR, mode=Mode.EDIT)
+export_notebook_as_app(PCA_DELIMITATION_NOTEBOOK, OUPUT_DIR, mode=Mode.RUN)
 # shutil.copytree(DATA_DIR, OUTPUT_DATA_DIR)
 
 # cd static_app

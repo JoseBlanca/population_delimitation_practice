@@ -10,3 +10,4 @@ wheels/
 .venv
 __marimo__/session/pca_population_delimitation_practice.py.json
 static_app/
+pop_delimit_practice_app/

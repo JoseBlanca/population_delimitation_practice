@@ -12,17 +12,15 @@ def _():
     PUBLIC_DIR = MY_URL / "public"
     DATA_DIR = "data"
     DATA_DIR = PUBLIC_DIR / DATA_DIR
-    WHEEL_DIR = PUBLIC_DIR / "wheels"
-    SCATTER3D_WHEEL = WHEEL_DIR / "scatter3d_anywidget-0.1.12-py3-none-any.whl"
     PASSPORTS_CSV_FNAME = "tomato_passports.csv"
     PASSPORTS = DATA_DIR / PASSPORTS_CSV_FNAME
     PCA_CSV_FNAME = "tomato_pca.csv"
     PCA_RESULT = DATA_DIR / PCA_CSV_FNAME
-    return PASSPORTS, PCA_RESULT, SCATTER3D_WHEEL, mo
+    return PASSPORTS, PCA_RESULT, mo
 
 
 @app.cell
-async def _(SCATTER3D_WHEEL):
+async def _():
     import numpy
     import pandas
 
@@ -32,7 +30,7 @@ async def _(SCATTER3D_WHEEL):
 
         # WASM path: install deps then import
         await micropip.install("plotly")
-        await micropip.install(str(SCATTER3D_WHEEL))
+        await micropip.install("scatter3d-anywidget")
 
     except ImportError:
         # Not running in Pyodide/WASM

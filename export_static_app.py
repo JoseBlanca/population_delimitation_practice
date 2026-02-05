@@ -4,7 +4,7 @@ from subprocess import run
 from enum import Enum
 
 PROJECT_DIR = Path(__file__).parent
-OUPUT_DIR = PROJECT_DIR / "pop_delimit_practice_app"
+OUPUT_DIR = PROJECT_DIR / "pop_delimit_practice"
 PCA_DELIMITATION_NOTEBOOK = PROJECT_DIR / "pca_population_delimitation_practice.py"
 DATA_DIR_NAME = "data"
 DATA_DIR = PROJECT_DIR / DATA_DIR_NAME

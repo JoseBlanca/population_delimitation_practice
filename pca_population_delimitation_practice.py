@@ -109,7 +109,8 @@ async def _(PASSPORTS, get_file, pandas):
 
 @app.cell
 def _(PCA_RESULT, pandas):
-    pca_res = pandas.read_csv(PCA_RESULT, index_col="id")
+    buf2 = await get_file(PCA_RESULT)
+    pca_res = pandas.read_csv(buf2, index_col="id")
     return (pca_res,)
 
 
@@ -175,12 +176,6 @@ def _(cat_dropdown, widget):
 @app.cell
 def _(widget):
     widget
-    return
-
-
-@app.cell
-def _(widget):
-    print(widget.active_category)
     return
 
 

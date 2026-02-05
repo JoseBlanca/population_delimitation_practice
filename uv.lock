@@ -369,7 +369,7 @@ requires-dist = [
     { name = "marimo", specifier = ">=0.19.6" },
     { name = "pandas", specifier = ">=2.3.3" },
     { name = "plotly", specifier = ">=6.5.2" },
-    { name = "scatter3d-anywidget", path = "../../../devel/any_scatter3d/dist/scatter3d_anywidget-0.1.12-py3-none-any.whl" },
+    { name = "scatter3d-anywidget", specifier = ">=0.1.13" },
 ]
 
 [[package]]
@@ -509,22 +509,16 @@ wheels = [
 
 [[package]]
 name = "scatter3d-anywidget"
-version = "0.1.12"
-source = { path = "../../../devel/any_scatter3d/dist/scatter3d_anywidget-0.1.12-py3-none-any.whl" }
+version = "0.1.13"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
     { name = "narwhals" },
     { name = "numpy" },
 ]
+sdist = { url = "https://files.pythonhosted.org/packages/98/46/27b58e27cca3f7b96cfca5a137cafed9fe986284ebe5914a9383778e1552/scatter3d_anywidget-0.1.13.tar.gz", hash = "sha256:ca7fab3b0fbc30210c926c5142f0b6cabbc4a97ce587c64b2be069407220f33f", size = 208972, upload-time = "2026-02-05T10:07:24.456Z" }
 wheels = [
-    { filename = "scatter3d_anywidget-0.1.12-py3-none-any.whl", hash = "sha256:1960748b4c5ad8fb0fdde6156690d8589cd8056b1ac28a505ce5dd47a9f6e236" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "anywidget", specifier = ">=0.9.21" },
-    { name = "narwhals", specifier = "==2.6.0" },
-    { name = "numpy", specifier = "==2.0.2" },
+    { url = "https://files.pythonhosted.org/packages/23/74/08947b842039759cb10001a90f6b43f5e344b23647bcf3f599018d477e3b/scatter3d_anywidget-0.1.13-py3-none-any.whl", hash = "sha256:69cd4b540d29881c67629995b06a336d46b7e97f601e4fd2375e3030c5d0d11b", size = 210296, upload-time = "2026-02-05T10:07:22.93Z" },
 ]
 
 [[package]]
